@@ -372,7 +372,7 @@ Exercise 11: Monitoring and Debugging TUN/TAP Traffic
    
    .. code-block:: bash
 
-      $ sudo apt-get install tcpdump wireshark
+      $ sudo apt install tcpdump wireshark
 
 2. Capture Traffic on TUN Device:
    
@@ -630,7 +630,7 @@ Exercise 16: Monitoring Bridge Traffic
    
    .. code-block:: bash
 
-      $ sudo apt-get install tcpdump
+      $ sudo apt install tcpdump
 
    This command installs the ``tcpdump`` tool if it's not already installed.
 
@@ -677,4 +677,215 @@ Exercise 17: Configuring Bridge with VLANs
    These commands activate the VLAN and bridge interfaces.
 
 **Verification**: Use ``bridge vlan`` to verify the VLAN configuration. You should see the VLAN interface ``eth0.10`` listed under the bridge ``br0``.
+
+
+
+
+
+
+
+
+
+Troubleshooting
+===============
+
+1. Verify Bridge Configuration
+------------------------------
+
+**Objective**: Ensure the bridge is correctly configured.
+
+**Steps**:
+
+- Check Bridge Status:
+  
+  .. code-block:: bash
+
+     $ sudo ip link show type bridge
+
+  This command lists all bridge interfaces and their statuses.
+
+- Check Interfaces in the Bridge:
+  
+  .. code-block:: bash
+
+     $ sudo bridge link
+
+  This command shows the interfaces that are part of the bridge.
+
+2. Check Interface Status
+-------------------------
+
+**Objective**: Ensure all interfaces added to the bridge are up and running.
+
+**Steps**:
+
+- Bring Up Interfaces:
+  
+  .. code-block:: bash
+
+     $ sudo ip link set dev eth0 up
+     $ sudo ip link set dev eth1 up
+     $ sudo ip link set dev br0 up
+
+  These commands activate the Ethernet and bridge interfaces.
+
+3. Verify IP Address Assignment
+-------------------------------
+
+**Objective**: Ensure the bridge interface has the correct IP address assigned.
+
+**Steps**:
+
+- Check IP Address:
+  
+  .. code-block:: bash
+
+     ip addr show br0
+
+  This command displays the IP address assigned to the bridge interface ``br0``.
+
+4. Ping Test
+------------
+
+**Objective**: Test connectivity between devices on the bridge.
+
+**Steps**:
+
+- Ping Between Devices:
+  
+  .. code-block:: bash
+
+     ping <target_device_ip>
+
+  This command tests connectivity between the bridge and another device on the network.
+
+5. Monitor Traffic
+------------------
+
+**Objective**: Monitor network traffic on the bridge interface.
+
+**Steps**:
+
+- Install ``tcpdump``
+  
+  .. code-block:: bash
+
+     $ sudo apt install tcpdump
+
+  This command installs the ``tcpdump`` tool if it's not already installed.
+
+- Monitor Traffic:
+  
+  .. code-block:: bash
+
+     $ sudo tcpdump -i br0
+
+  This command starts monitoring traffic on the bridge interface ``br0``.
+
+1. Check ARP Table
+------------------
+
+**Objective**: Ensure the ARP table is correctly populated.
+
+**Steps**:
+
+- View ARP Table:
+  
+  .. code-block:: bash
+
+     arp -n
+
+  This command displays the ARP table, showing the MAC addresses and IP addresses of devices that the bridge has communicated with.
+
+7. Check Bridge Forwarding Database
+-----------------------------------
+
+**Objective**: Verify the bridge's forwarding database.
+
+**Steps**:
+
+- View Forwarding Database:
+  
+  .. code-block:: bash
+
+     $ sudo bridge fdb show
+
+  This command shows the forwarding database of the bridge, listing MAC addresses and their associated ports.
+
+8. Check for Duplicate MAC Addresses
+------------------------------------
+
+**Objective**: Ensure there are no duplicate MAC addresses on the network.
+
+**Steps**:
+
+- Check for Duplicates:
+  
+  .. code-block:: bash
+
+     $ sudo ip -s -s neigh flush all
+
+  This command clears the ARP cache, which can help identify duplicate MAC addresses.
+
+9. Spanning Tree Protocol (STP)
+-------------------------------
+
+**Objective**: Ensure STP is correctly configured to prevent network loops.
+
+**Steps**:
+
+- Enable STP:
+  
+  .. code-block:: bash
+
+     $ sudo ip link set dev br0 type bridge stp_state 1
+
+  This command enables STP on the bridge interface ``br0``.
+
+10. Firewall Rules
+------------------
+
+**Objective**: Ensure firewall rules are not blocking traffic on the bridge interface.
+
+**Steps**:
+
+- Check Firewall Rules:
+  
+  .. code-block:: bash
+
+     $ sudo iptables -L -v -n
+
+  This command lists the current firewall rules.
+
+11. Logs and Diagnostics
+------------------------
+
+**Objective**: Check system logs for any error messages related to the bridge.
+
+**Steps**:
+
+- View System Logs:
+  
+  .. code-block:: bash
+
+     $ sudo dmesg | grep br0
+     $ sudo journalctl -xe
+
+  These commands display system logs and error messages related to the bridge interface ``br0``.
+
+12. Restart Network Services
+----------------------------
+
+**Objective**: Restart network services to apply changes and resolve issues.
+
+**Steps**:
+
+- Restart Networking:
+  
+  .. code-block:: bash
+
+     $ sudo systemctl restart networking
+
+  This command restarts the networking service.
+
 
