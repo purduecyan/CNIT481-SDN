@@ -740,7 +740,7 @@ Troubleshooting
   
   .. code-block:: bash
 
-     ip addr show br0
+     $ ip addr show br0
 
   This command displays the IP address assigned to the bridge interface ``br0``.
 
@@ -755,7 +755,7 @@ Troubleshooting
   
   .. code-block:: bash
 
-     ping <target_device_ip>
+     $ ping <target_device_ip>
 
   This command tests connectivity between the bridge and another device on the network.
 
@@ -782,7 +782,7 @@ Troubleshooting
 
   This command starts monitoring traffic on the bridge interface ``br0``.
 
-1. Check ARP Table
+6. Check ARP Table
 ------------------
 
 **Objective**: Ensure the ARP table is correctly populated.
@@ -793,7 +793,7 @@ Troubleshooting
   
   .. code-block:: bash
 
-     arp -n
+     $ arp -n
 
   This command displays the ARP table, showing the MAC addresses and IP addresses of devices that the bridge has communicated with.
 
