@@ -3,14 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-CNIT 481: Software Defined Networks
-===================================
+CNIT 48101: SDN and Network Virtualization
+==========================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Labs
+   :caption: Learning Exercises
 
    labs/intro
+   labs/linux_bridges
 
 
 .. toctree::
