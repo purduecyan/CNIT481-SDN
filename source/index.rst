@@ -12,6 +12,7 @@ CNIT 48101: SDN and Network Virtualization
 
    labs/intro
    labs/linux_bridges
+   labs/lxc_networks
 
 
 .. toctree::

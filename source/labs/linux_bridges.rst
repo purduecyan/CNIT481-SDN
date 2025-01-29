@@ -699,7 +699,7 @@ Enable Spanning Tree Protocol (STP)
 
      sudo ip link set dev br0 type bridge stp_state 1
 
-  This command enables STP on the bridge interface `br0`.
+  This command enables STP on the bridge interface ``br0``.
 
 Adjust Bridge Forward Delay
 ---------------------------
@@ -746,7 +746,7 @@ Enable Hardware Offloading
      sudo ethtool -K eth0 tso on
      sudo ethtool -K eth0 gso on
 
-  These commands enable Generic Receive Offload (GRO), TCP Segmentation Offload (TSO), and Generic Segmentation Offload (GSO) on the Ethernet interface `eth0`.
+  These commands enable Generic Receive Offload (GRO), TCP Segmentation Offload (TSO), and Generic Segmentation Offload (GSO) on the Ethernet interface ``eth0``.
 
 Increase MTU Size
 --------------------
@@ -803,23 +803,23 @@ Monitor and Analyze Performance
 
 **Steps**:
 
-- Use `iftop` for Real-Time Monitoring:
+- Use ``iftop`` for Real-Time Monitoring:
   
   .. code-block:: bash
 
      sudo apt-get install iftop
      sudo iftop -i br0
 
-  This command installs and runs `iftop` to monitor network traffic on the bridge interface `br0`.
+  This command installs and runs ``iftop`` to monitor network traffic on the bridge interface ``br0``.
 
-- Use `nload` for Bandwidth Usage:
+- Use ``nload`` for Bandwidth Usage:
   
   .. code-block:: bash
 
      sudo apt-get install nload
      sudo nload br0
 
-  This command installs and runs `nload` to monitor bandwidth usage on the bridge interface `br0`.
+  This command installs and runs ``nload`` to monitor bandwidth usage on the bridge interface ``br0``.
 
 
 
