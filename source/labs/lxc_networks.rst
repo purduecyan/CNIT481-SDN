@@ -2,7 +2,7 @@
 LXC and Virtual Networking
 **************************
 
-LXC or Linux Containers is a lightweight virtualization technology that allows you to run multiple isolated Linux systems on a single host. LXC provides a way to create and manage system or application containers, which are similar to virtual machines but with less overhead. This guide provides an overview of LXC networking concepts and how to configure virtual networks for LXC containers. More information on LXC can be found in the ``LXC documentation <https://linuxcontainers.org/lxc/introduction/>``_.
+LXC or Linux Containers is a lightweight virtualization technology that allows you to run multiple isolated Linux systems on a single host. LXC provides a way to create and manage system or application containers, which are similar to virtual machines but with less overhead. This guide provides an overview of LXC networking concepts and how to configure virtual networks for LXC containers. More information on LXC can be found in the `LXC documentation <https://linuxcontainers.org/lxc/introduction/>`_.
 
 
 Connecting Two LXC VMs Using TAP Devices
@@ -165,3 +165,160 @@ Network Configuration Explanation
 - TAP Devices (``tap0``, ``tap1``): Serve as virtual network interfaces for the VMs.
 - LXC VM Configuration: Configures the VMs to use the TAP devices and assigns IP addresses for communication.
 
+
+
+Exercises
+=========
+
+Develop solutions for the following configurations using TUN/TAP/bridge devices on LXC containers.
+
+Bridging using Routed Subnets
+-----------------------------
+
+This solution should enable communication between the host and VM (bidirectional). Assign a new IP subnet to the host's bridge interface, and do not use the subnet anywhere else. The VMs should be configured using different tap interfaces and MAC addresses. The IP of each VM should be in the same subnet as the subnet of the bridge so that the host and VMs can communicate.
+
+
+.. graphviz::
+   :caption: Bridging using Routed Subnets
+   :align: center
+
+      digraph G {
+      rankdir=TB;
+      node [shape=box];
+
+      subgraph cluster_host {
+         label = "Host";
+         style=filled;
+         color=lightgrey;
+         
+         bridge [label="Bridge Interface (br0)\nIP: 192.168.1.1/24"];
+         tap1 [label="TAP Interface (tap0)\nMAC: 00:11:22:33:44:55"];
+         tap2 [label="TAP Interface (tap1)\nMAC: 00:11:22:33:44:66"];
+         
+         bridge -> tap1 [label="192.168.1.2"];
+         bridge -> tap2 [label="192.168.1.3"];
+      }
+
+      subgraph cluster_vm1 {
+         label = "VM1";
+         style=filled;
+         color=lightblue;
+         
+         vm1 [label="VM1\nIP: 192.168.1.2"];
+      }
+
+      subgraph cluster_vm2 {
+         label = "VM2";
+         style=filled;
+         color=lightblue;
+         
+         vm2 [label="VM2\nIP: 192.168.1.3"];
+      }
+
+      tap1 -> vm1;
+      tap2 -> vm2;
+      }
+
+
+Bridge using Routed Subnet, VMs connect to the Internet using Host LAN
+----------------------------------------------------------------------
+
+This solution should provide Internet access to the VMs. Extend the previous configuration by enabling routing (i.e., IP forwarding on the host) and use iptables to set up a rule to perform IP masquerading on packets leaving the en* interface. This allows multiple devices on the private network to share a single public IP address for outbound traffic.
+
+
+
+.. graphviz::
+   :caption: Bridge using Routed Subnet, VMs connect to the Internet using Host LAN
+   :align: center
+
+      digraph G {
+         rankdir=TB;
+         node [shape=box];
+
+         subgraph cluster_host {
+            label = "Host";
+            style=filled;
+            color=lightgrey;
+            
+            bridge [label="Bridge Interface (br0)\nIP: 192.168.1.1/24"];
+            tap1 [label="TAP Interface (tap0)\nMAC: 00:11:22:33:44:55"];
+            tap2 [label="TAP Interface (tap1)\nMAC: 00:11:22:33:44:66"];
+            enp [label="External Interface (enp2s0)\nPublic IP"];
+            
+            bridge -> tap1 [label="192.168.1.2"];
+            bridge -> tap2 [label="192.168.1.3"];
+            bridge -> enp [label="IP Forwarding + iptables"];
+         }
+
+         subgraph cluster_vm1 {
+            label = "VM1";
+            style=filled;
+            color=lightblue;
+            
+            vm1 [label="VM1\nIP: 192.168.1.2"];
+         }
+
+         subgraph cluster_vm2 {
+            label = "VM2";
+            style=filled;
+            color=lightblue;
+            
+            vm2 [label="VM2\nIP: 192.168.1.3"];
+         }
+
+         tap1 -> vm1;
+         tap2 -> vm2;
+      }
+
+
+
+Bridge to Layer 2 to connect the VM to the Host Switch with DHCP
+----------------------------------------------------------------
+
+This solution connects the VM to the same network switch as the host machine. For instance, if a DHCP server is present on the network and the host machine receives its IP address from this DHCP server, the VM can also obtain an IP address from the same DHCP server. This setup is commonly used in ESXi, Xen, or HyperV VM production environments.
+
+
+.. graphviz::
+   :caption: Bridge to Layer 2 to connect the VM to the Host Switch with DHCP
+   :align: center
+
+      digraph G {
+         rankdir=TD;
+         node [shape=box];
+
+         subgraph cluster_network {
+            label = "Network";
+            style=filled;
+            color=lightgrey;
+            
+            dhcp [label="DHCP Server"];
+            switch [label="Network Switch"];
+            
+            dhcp -> switch;
+         }
+
+         subgraph cluster_host {
+            label = "Host";
+            style=filled;
+            color=lightblue;
+            
+            host [label="Host Machine\nIP from DHCP"];
+            bridge [label="Bridge Interface (br0)"];
+            tap1 [label="TAP Interface (tap0)"];
+            
+            host -> bridge;
+            bridge -> tap1;
+            switch -> host;
+         }
+
+         subgraph cluster_vm {
+            label = "VM";
+            style=filled;
+            color=lightgreen;
+            
+            vm [label="VM\nIP from DHCP"];
+            
+            tap1 -> vm;
+            switch -> vm;
+         }
+      }
