@@ -3,8 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-CNIT 48101: SDN and Network Virtualization
-==========================================
+******************************
+SDN and Network Virtualization
+******************************
 
 .. toctree::
    :maxdepth: 2
@@ -13,6 +14,7 @@ CNIT 48101: SDN and Network Virtualization
    labs/intro
    labs/linux_bridges
    labs/lxc_networks
+   labs/mininet
 
 
 .. toctree::
@@ -22,9 +24,16 @@ CNIT 48101: SDN and Network Virtualization
    projects/authors
 
 
-.. Indices and tables
-.. ==================
-.. 
-.. * :ref:`genindex`
-.. * :ref:`modindex`
-.. * :ref:`search`
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
+
+   labs/api
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

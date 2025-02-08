@@ -19,7 +19,7 @@ import datetime
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('.'))
 
 # -- General configuration ------------------------------------------------
 
@@ -33,8 +33,24 @@ import datetime
 extensions = ['sphinx-prompt', 
               'sphinx_copybutton', 
               'sphinxcontrib.jquery',
-              'sphinx.ext.graphviz'
+              'sphinx.ext.graphviz',
+              'sphinx.ext.autodoc',
+              'sphinx.ext.autosummary',
+              'sphinx.ext.intersphinx',
+              'sphinx.ext.napoleon',
+              'sphinx.ext.viewcode',
               ]
+
+# Mappings for sphinx.ext.intersphinx. Projects have to have Sphinx-generated doc! (.inv file)
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3/", None),
+}
+
+# autosummary_generate = True  # Turn on sphinx.ext.autosummary
+# autoclass_content = "both"  # Add __init__ doc (ie. params) to class summaries
+# autodoc_inherit_docstrings = True  # If no docstring, inherit from base class
+
+autodoc_mock_imports = ["mininet"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
