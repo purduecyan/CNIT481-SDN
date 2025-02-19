@@ -4,6 +4,9 @@ Linux Bridges and TUN/TAP Devices
 
 Linux bridges and TUN/TAP devices are used to create virtual networks.
 
+.. contents::
+   :local:
+   :depth: 2
 
 TUN/TAP Devices
 ===============

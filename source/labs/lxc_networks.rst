@@ -4,6 +4,9 @@ LXC and Virtual Networking
 
 LXC or Linux Containers is a lightweight virtualization technology that allows you to run multiple isolated Linux systems on a single host. LXC provides a way to create and manage system or application containers, which are similar to virtual machines but with less overhead. This guide provides an overview of LXC networking concepts and how to configure virtual networks for LXC containers. More information on LXC can be found in the `LXC documentation <https://linuxcontainers.org/lxc/introduction/>`_.
 
+.. contents::
+   :local:
+   :depth: 2
 
 Connecting Two LXC VMs Using TAP Devices
 ========================================

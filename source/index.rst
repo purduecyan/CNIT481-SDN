@@ -15,6 +15,7 @@ SDN and Network Virtualization
    labs/linux_bridges
    labs/lxc_networks
    labs/mininet
+   labs/openvswitch
 
 
 .. toctree::

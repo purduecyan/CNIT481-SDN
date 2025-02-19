@@ -2,6 +2,9 @@
 Mininet
 *******
 
+.. contents::
+   :local:
+   :depth: 2
 
 Introduction to Mininet
 =======================
@@ -164,19 +167,13 @@ Steps:
 
       mininet> net
 
-3. List the hosts in the network:
+3. List the ports in the network:
    
    .. code-block:: bash
 
-      mininet> hosts
+      mininet> ports
 
-4. List the switches in the network:
-   
-   .. code-block:: bash
-
-      mininet> switches
-
-5. List the links in the network:
+4. List the links in the network:
    
    .. code-block:: bash
 
@@ -264,6 +261,13 @@ Steps:
 
       ifconfig
       ping -c 3 h2
+
+4. Alternatively, you can open XTerm windows automatically using the ``mn`` command:
+   
+   .. code-block:: bash
+
+      $ sudo mn --xterms
+
 
 Exercise 7: Capturing Packets with Wireshark
 --------------------------------------------
