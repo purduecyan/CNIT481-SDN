@@ -883,6 +883,23 @@ The network topology includes two ports (``eth0`` and ``eth1``) connected to the
 
 
 
+
+
+Command Reference
+=================
+
+An exhaustive command reference manpages are available at https://www.openvswitch.org/support/dist-docs/.
+
+- ``ovs-vsctl:`` This tool is used for configuring the ovs-vswitchd configuration database (known as ovs-db).
+- ``ovs-ofctl:`` This tool is used for administering and monitoring OpenFlow switches.
+- ``ovs-dpctl:`` This tool is used to administer Open vSwitch datapaths.
+- ``ovs-appctl:`` This tool is used for querying and controlling Open vSwitch daemons.
+- ``ovs-vswitchd:`` This is the main Open vSwitch daemon responsible for managing the switch.
+- ``ovsdb-server:`` This daemon manages the Open vSwitch database.
+
+
+
+
 References
 ==========
 
